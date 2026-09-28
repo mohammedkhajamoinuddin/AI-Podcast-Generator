@@ -15,7 +15,7 @@ The user simply provides a topic, and the workflow:
 - Generates a podcast script using Google Gemini
 - Converts the script into natural-sounding speech using Murf AI
 - Downloads the generated audio file
-- Produces a ready-to-listen podcast episode
+- Produces a narrated podcast-style audio episode
 
 The result is a fully automated text-to-audio content generation pipeline.
 
