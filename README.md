@@ -1,6 +1,6 @@
 # AI Podcast Generator
 
-An AI-powered podcast generation workflow that transforms user-provided topics into professionally narrated podcast episodes using Google Gemini, Murf AI, and n8n.
+An AI-powered podcast generation workflow that transforms user-provided topics into professionally narrated podcast-style audio episodes using Google AI Studio, Google Gemini, Murf AI, and n8n.
 
 ---
 
@@ -8,14 +8,14 @@ An AI-powered podcast generation workflow that transforms user-provided topics i
 
 This project automates podcast creation using Generative AI and Text-to-Speech technologies.
 
-Instead of manually researching a topic, writing a script, recording narration, and editing audio, the workflow generates a complete podcast episode automatically.
+Instead of manually researching a topic, writing a script, recording narration, and editing audio, the workflow generates a complete podcast-style audio episode automatically.
 
 The user simply provides a topic, and the workflow:
 
 - Generates a podcast script using Google Gemini
 - Converts the script into natural-sounding speech using Murf AI
 - Downloads the generated audio file
-- Produces a narrated podcast-style audio episode
+- Produces a ready-to-listen podcast-style audio episode
 
 The result is a fully automated text-to-audio content generation pipeline.
 
@@ -33,7 +33,7 @@ Creating podcast content traditionally involves:
 
 This process can take hours for a single episode.
 
-This project automates the workflow using AI-powered content generation and text-to-speech synthesis, significantly reducing content creation effort and time.
+This project automates the workflow using AI-powered content generation and text-to-speech synthesis, significantly reducing content creation effort and production time.
 
 ---
 
@@ -41,6 +41,7 @@ This project automates the workflow using AI-powered content generation and text
 
 - Chat-based topic input
 - AI-generated podcast script creation
+- Google AI Studio integration
 - Google Gemini integration
 - Murf AI text-to-speech conversion
 - Natural-sounding podcast narration
@@ -73,7 +74,11 @@ Listen to Podcast
 ## Architecture
 
 ```text
+User Topic
+      ↓
 Chat Trigger
+      ↓
+Google AI Studio
       ↓
 Google Gemini
 Podcast Script Generator
@@ -85,7 +90,7 @@ Audio URL Response
       ↓
 Podcast Audio Downloader
       ↓
-Generated Podcast (.wav)
+Generated Podcast Audio (.wav)
 ```
 
 ---
@@ -127,6 +132,7 @@ Generated Podcast (.wav)
 
 ### Artificial Intelligence
 
+- Google AI Studio
 - Google Gemini
 - Prompt Engineering
 - Generative AI
@@ -141,7 +147,7 @@ Generated Podcast (.wav)
 - n8n
 - Workflow Automation
 
-### APIs
+### APIs & Integrations
 
 - Google Gemini API
 - Murf AI API
@@ -153,13 +159,14 @@ Generated Podcast (.wav)
 
 - Built a chat-driven podcast generation workflow
 - Created and configured a dedicated Google AI Studio project
-- Generated and integrated Gemini API credentials
+- Generated and managed Gemini API credentials
+- Integrated Google Gemini with n8n using secure API authentication
 - Automated podcast script generation using Google Gemini
 - Integrated Murf AI for realistic voice synthesis
-- Implemented text-to-speech generation using REST APIs
+- Implemented text-to-speech generation through REST APIs
 - Configured binary audio downloads in n8n
 - Designed an end-to-end text-to-audio automation pipeline
-- Automated podcast creation from a single user prompt
+- Automated podcast-style audio creation from a single user prompt
 
 ---
 
@@ -169,8 +176,33 @@ Generated Podcast (.wav)
 2. Google Gemini generates a conversational podcast script.
 3. Murf AI converts the generated script into natural-sounding speech.
 4. Murf AI returns an audio URL.
-5. A second HTTP Request node downloads the audio file.
-6. The workflow produces a ready-to-listen podcast episode.
+5. A second HTTP Request node downloads the generated audio file.
+6. The workflow produces a ready-to-listen podcast-style audio episode.
+
+---
+
+## Challenges Faced
+
+### Google AI Studio & Gemini
+
+- Creating a dedicated Google AI Studio project
+- Generating Gemini API credentials
+- Connecting Gemini with n8n
+- Prompt engineering for podcast script generation
+
+### Murf AI Integration
+
+- API authentication setup
+- Text-to-speech endpoint configuration
+- Voice selection and testing
+- Audio generation workflow configuration
+
+### Workflow Design
+
+- Passing generated content between nodes
+- Binary file handling
+- Audio file downloads
+- End-to-end workflow testing
 
 ---
 
@@ -178,15 +210,16 @@ Generated Podcast (.wav)
 
 - Workflow Orchestration using n8n
 - Google AI Studio Setup
-- Gemini API Integration
+- Gemini API Key Generation and Management
+- Google Gemini Integration
 - Prompt Engineering
 - Murf AI Integration
 - Text-to-Speech Generation
 - HTTP Request Configuration
 - Binary Data Handling
 - Chat-Based Workflow Design
-- End-to-End AI Automation
 - API Authentication and Credential Management
+- End-to-End AI Automation
 
 ---
 
@@ -194,31 +227,27 @@ Generated Podcast (.wav)
 
 ### Workflow Overview
 
-screenshots/workflow-overview.png
+![Workflow Overview](screenshots/workflow-overview.png)
+
+The n8n workflow orchestrates the complete podcast generation pipeline, from chat-based topic input through AI script generation, text-to-speech conversion, and audio download.
 
 ---
 
 ### Generated Podcast Script
 
-screenshots/chat-generated-script.png
+![Generated Podcast Script](screenshots/chat-generated-script.png)
 
----
-
-### Generated Audio Output
-
-screenshots/generated-podcast-output.png
+Google Gemini generates the podcast script based on the topic provided through the chat interface.
 
 ---
 
 ## Sample Output
 
-A sample AI-generated podcast episode is included in this repository:
+The following WAV file is the final podcast generated by the workflow:
 
-```text
-sample-podcast.wav
-```
+**[Listen to the generated podcast](sample-podcast.wav)**
 
-The podcast was generated automatically from a user-provided topic using Google Gemini and Murf AI.
+The audio was automatically generated using Google Gemini for script generation and Murf AI for text-to-speech synthesis.
 
 ---
 
@@ -229,7 +258,7 @@ The podcast was generated automatically from a user-provided topic using Google 
 - Automates text-to-audio conversion
 - Demonstrates practical AI audio generation
 - Showcases API-driven workflow automation
-- Converts simple user prompts into complete audio content
+- Converts simple user prompts into complete narrated audio content
 - Demonstrates Generative AI and Text-to-Speech integration
 
 ---
