@@ -1,0 +1,181 @@
+{
+  "name": "AI Podcast Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "956a2a11-d9b6-480f-a74a-e2b040a7c0fc",
+      "name": "When chat message received",
+      "webhookId": "35954202-de76-4d59-b372-d2fb76d7a896"
+    },
+    {
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a professional podcast script writer.  \n\nWrite a conversational and engaging podcast script on the topic: {{ $json.chatInput }}. \n\nKeep it around 2 minutes when spoken.  Use a friendly and informative tone, as if talking directly to listeners.  Avoid any headings, labels, or formatting. Output plain text only."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        224,
+        0
+      ],
+      "id": "43ac85e4-2083-494f-a59e-12a264884dd1",
+      "name": "Podcast Script Generator"
+    },
+    {
+      "parameters": {
+        "modelName": "models/antigravity-preview-05-2026",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        304,
+        224
+      ],
+      "id": "380145e0-131e-4754-a540-5728d9982bf5",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "IDQkzcmiqOzrNVco",
+          "name": "Google Gemini(PaLM) Api account 18400"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.murf.ai/v1/speech/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api-key",
+              "value": "ap2_be4295c9-64ba-43cf-822c-835e6143fa64"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            },
+            {
+              "name": "voiceId",
+              "value": "en-US-natalie"
+            },
+            {
+              "name": "style",
+              "value": "Conversational"
+            },
+            {
+              "name": "modelVersion",
+              "value": "GEN2"
+            },
+            {
+              "name": "locale",
+              "value": "en-IN"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        576,
+        0
+      ],
+      "id": "779894cc-af28-4419-a7f6-cbc59415902e",
+      "name": "Murf API"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.audioFile }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        800,
+        0
+      ],
+      "id": "95d41e5c-5856-422c-9649-8ecf5a8f8863",
+      "name": "Podcast Audio File Downloader"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Podcast Script Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Podcast Script Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Podcast Script Generator": {
+      "main": [
+        [
+          {
+            "node": "Murf API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Murf API": {
+      "main": [
+        [
+          {
+            "node": "Podcast Audio File Downloader",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f472b56b-43d4-43e9-895b-f5caf77991e0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "969257b09ad2942bbaff2e2288304f4969030574d109cdeca05bf11f630884df"
+  },
+  "id": "fl00Ft16PHsv34Fx",
+  "tags": []
+}
