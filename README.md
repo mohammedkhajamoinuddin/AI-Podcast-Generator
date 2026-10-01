@@ -1,6 +1,10 @@
-# AI Podcast Generator
+# AI Podcast Generator Platform
 
-An AI-powered podcast generation workflow that transforms user-provided topics into professionally narrated podcast-style audio episodes using Google AI Studio, Google Gemini, Murf AI, and n8n.
+An AI-powered podcast generation platform that transforms user-provided topics into professionally narrated podcast-style audio episodes using Google AI Studio, Google Gemini, Murf AI, n8n, and a browser-based frontend application.
+
+## Live Demo
+
+🔗 https://bubble-beat-booth.lovable.app
 
 ---
 
@@ -8,16 +12,44 @@ An AI-powered podcast generation workflow that transforms user-provided topics i
 
 This project automates podcast creation using Generative AI and Text-to-Speech technologies.
 
-Instead of manually researching a topic, writing a script, recording narration, and editing audio, the workflow generates a complete podcast-style audio episode automatically.
+The project started as an n8n-based workflow that generated podcast audio through a chat interface.
 
-The user simply provides a topic, and the workflow:
+It was later enhanced with a browser-based frontend application built using Lovable and integrated with the workflow using webhooks, transforming the solution into a complete AI-powered podcast generation platform.
 
-- Generates a podcast script using Google Gemini
-- Converts the script into natural-sounding speech using Murf AI
-- Downloads the generated audio file
-- Produces a ready-to-listen podcast-style audio episode
+Users can now:
 
-The result is a fully automated text-to-audio content generation pipeline.
+- Enter a podcast topic through a web interface
+- Trigger workflow execution through a webhook
+- Generate AI-created podcast scripts
+- Convert scripts into natural-sounding speech
+- Listen to generated podcasts directly in the browser
+
+The result is a fully automated end-to-end podcast generation platform.
+
+---
+
+## Major Enhancement (Version 2)
+
+### Version 1
+
+The original implementation operated through the n8n Chat Trigger interface.
+
+Users had to interact directly with the workflow to generate podcasts.
+
+### Version 2
+
+The project was significantly enhanced by introducing:
+
+- Browser-based frontend application
+- Webhook-based workflow triggering
+- Frontend-to-n8n integration
+- Browser audio playback
+- Automated response handling
+- Public deployment
+
+This transformed the solution from an internal workflow automation into a publicly accessible AI-powered application.
+
+Users no longer need direct access to n8n to generate podcasts.
 
 ---
 
@@ -39,6 +71,8 @@ This project automates the workflow using AI-powered content generation and text
 
 ## Key Features
 
+### Version 1 Features
+
 - Chat-based topic input
 - AI-generated podcast script creation
 - Google AI Studio integration
@@ -48,49 +82,80 @@ This project automates the workflow using AI-powered content generation and text
 - Automated audio generation
 - Automated audio download
 - End-to-end workflow automation
-- API-driven architecture
-- Binary audio file handling
+
+### Version 2 Features
+
+- Public web application
+- Responsive user interface
+- Webhook-based workflow triggering
+- Frontend-to-workflow integration
+- Browser audio playback
+- Real-time request handling
+- Public deployment
+- Improved user experience
 
 ---
 
-## Workflow
+## Project Evolution
 
-### User Flow
+### Version 1
 
 ```text
-Enter Podcast Topic
-         ↓
-Generate Podcast Script
-         ↓
-Convert Text to Speech
-         ↓
-Download Audio File
-         ↓
-Listen to Podcast
+User
+  ↓
+Chat Trigger
+  ↓
+Google Gemini
+  ↓
+Murf AI
+  ↓
+Generated Audio
+```
+
+### Version 2
+
+```text
+User
+  ↓
+Frontend Application
+  ↓
+Webhook
+  ↓
+n8n Workflow
+  ↓
+Google Gemini
+  ↓
+Murf AI
+  ↓
+Respond to Webhook
+  ↓
+Browser Audio Player
 ```
 
 ---
 
-## Architecture
+## Architecture (Version 2)
 
 ```text
-User Topic
-      ↓
-Chat Trigger
-      ↓
-Google AI Studio
-      ↓
+User
+  ↓
+Frontend Application (Lovable)
+  ↓
+Webhook
+  ↓
+n8n Workflow
+  ↓
 Google Gemini
-Podcast Script Generator
-      ↓
-Murf AI API
+Podcast Script Generation
+  ↓
+Murf AI
 Text-to-Speech Generation
-      ↓
-Audio URL Response
-      ↓
-Podcast Audio Downloader
-      ↓
-Generated Podcast Audio (.wav)
+  ↓
+Generated Audio
+  ↓
+Respond to Webhook
+  ↓
+Browser Audio Player
 ```
 
 ---
@@ -98,32 +163,47 @@ Generated Podcast Audio (.wav)
 ## Detailed Technical Architecture
 
 ```text
-┌────────────────────┐
-│ Chat Trigger       │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ Podcast Script     │
-│ Generator          │
-│ Google Gemini      │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ Murf AI API        │
-│ Text-to-Speech     │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ Audio Downloader   │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ WAV Audio Output   │
-└────────────────────┘
+┌──────────────────────────────┐
+│ Browser User                 │
+└─────────────┬────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│ Lovable Frontend             │
+│ Podcast UI                   │
+└─────────────┬────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│ Webhook Trigger              │
+└─────────────┬────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│ Google Gemini                │
+│ Podcast Script Generator     │
+└─────────────┬────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│ Murf AI API                  │
+│ Text-to-Speech Generation    │
+└─────────────┬────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│ Audio Downloader             │
+└─────────────┬────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│ Respond to Webhook           │
+└─────────────┬────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│ Browser Audio Player         │
+└──────────────────────────────┘
 ```
 
 ---
@@ -142,6 +222,13 @@ Generated Podcast Audio (.wav)
 - Murf AI
 - Text-to-Speech (TTS)
 
+### Frontend
+
+- Lovable
+- React
+- TypeScript
+- Vite
+
 ### Automation
 
 - n8n
@@ -151,33 +238,44 @@ Generated Podcast Audio (.wav)
 
 - Google Gemini API
 - Murf AI API
+- Webhooks
 - HTTP Request Nodes
+
+### Deployment
+
+- Lovable Deployment Platform
 
 ---
 
 ## Engineering Highlights
 
-- Built a chat-driven podcast generation workflow
+- Built an AI-powered podcast generation workflow using n8n
 - Created and configured a dedicated Google AI Studio project
 - Generated and managed Gemini API credentials
 - Integrated Google Gemini with n8n using secure API authentication
 - Automated podcast script generation using Google Gemini
 - Integrated Murf AI for realistic voice synthesis
-- Implemented text-to-speech generation through REST APIs
+- Implemented REST API-based text-to-speech generation
 - Configured binary audio downloads in n8n
 - Designed an end-to-end text-to-audio automation pipeline
-- Automated podcast-style audio creation from a single user prompt
+- Replaced Chat Trigger architecture with Webhook architecture
+- Built and integrated a browser-based frontend using Lovable
+- Implemented frontend-to-workflow communication
+- Added browser audio playback capabilities
+- Published a public-facing AI podcast generation application
 
 ---
 
 ## How It Works
 
-1. User enters a podcast topic through the chat interface.
-2. Google Gemini generates a conversational podcast script.
-3. Murf AI converts the generated script into natural-sounding speech.
-4. Murf AI returns an audio URL.
-5. A second HTTP Request node downloads the generated audio file.
-6. The workflow produces a ready-to-listen podcast-style audio episode.
+1. User enters a podcast topic through the browser interface.
+2. The frontend sends the topic to an n8n webhook.
+3. Google Gemini generates a podcast-style script.
+4. Murf AI converts the generated script into natural-sounding speech.
+5. Murf AI returns an audio URL.
+6. The workflow downloads the generated audio.
+7. The generated podcast is returned to the frontend.
+8. Users can listen directly from the browser.
 
 ---
 
@@ -197,6 +295,13 @@ Generated Podcast Audio (.wav)
 - Voice selection and testing
 - Audio generation workflow configuration
 
+### Webhook Integration
+
+- Replacing Chat Trigger architecture
+- Frontend-to-workflow communication
+- Request and response handling
+- Error handling implementation
+
 ### Workflow Design
 
 - Passing generated content between nodes
@@ -215,29 +320,70 @@ Generated Podcast Audio (.wav)
 - Prompt Engineering
 - Murf AI Integration
 - Text-to-Speech Generation
+- React Frontend Integration
+- Webhook Architecture
 - HTTP Request Configuration
 - Binary Data Handling
-- Chat-Based Workflow Design
 - API Authentication and Credential Management
 - End-to-End AI Automation
+- Frontend to Workflow Communication
+
+---
+
+## Repository Structure
+
+```text
+AI-Podcast-Generator
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── React frontend application
+│
+├── workflows/
+│   ├── podcast-generator-v1.json
+│   └── podcast-generator-v2-webhook.json
+│
+├── screenshots/
+│
+├── sample-podcast.wav
+│
+└── README.md
+```
 
 ---
 
 ## Screenshots
 
-### Workflow Overview
+### Workflow Overview — Version 1
 
-![Workflow Overview](screenshots/workflow-overview.png)
+![Workflow Overview - Version 1](screenshots/workflow-v1.png)
 
-The n8n workflow orchestrates the complete podcast generation pipeline, from chat-based topic input through AI script generation, text-to-speech conversion, and audio download.
+The original n8n workflow orchestrates the podcast generation pipeline using a Chat Trigger, Google Gemini, Murf AI, and audio download functionality.
 
 ---
 
 ### Generated Podcast Script
 
-![Generated Podcast Script](screenshots/chat-generated-script.png)
+![Generated Podcast Script - Version 1](screenshots/chat-generated-script-v1.png)
 
 Google Gemini generates the podcast script based on the topic provided through the chat interface.
+
+---
+
+### Workflow Overview — Version 2
+
+![Workflow Overview - Version 2](screenshots/workflow-v2.png)
+
+The enhanced workflow uses a Webhook Trigger, frontend integration, Google Gemini, Murf AI, audio download, and Respond to Webhook architecture.
+
+---
+
+### Public Web Application
+
+![AI Podcast Generator Frontend](screenshots/frontend-ui-v2.png)
+
+The browser-based frontend application allows users to generate AI-powered podcasts without directly accessing n8n.
 
 ---
 
@@ -257,9 +403,11 @@ The audio was automatically generated using Google Gemini for script generation 
 - Reduces podcast production effort
 - Automates text-to-audio conversion
 - Demonstrates practical AI audio generation
-- Showcases API-driven workflow automation
-- Converts simple user prompts into complete narrated audio content
-- Demonstrates Generative AI and Text-to-Speech integration
+- Demonstrates frontend-to-backend integration
+- Demonstrates webhook-based workflow automation
+- Converts workflow automation into a user-facing application
+- Converts simple user prompts into narrated podcast content
+- Demonstrates integration of Generative AI, TTS, frontend engineering, and automation technologies
 
 ---
 
@@ -273,6 +421,8 @@ The audio was automatically generated using Google Gemini for script generation 
 - Multi-language podcast generation
 - Podcast series creation
 - Custom voice cloning support
+- User authentication
+- Podcast history management
 
 ---
 
