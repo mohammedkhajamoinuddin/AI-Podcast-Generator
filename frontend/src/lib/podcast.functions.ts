@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const PODCAST_WEBHOOK_URL =
-  "https://workflow.ccbp.in/webhook-test/8ff1a750-5346-42bb-8662-4c7194be303e";
+  "https://workflow.ccbp.in/webhook/8ff1a750-5346-42bb-8662-4c7194be303e";
 
 export const generatePodcast = createServerFn({ method: "POST" })
   .inputValidator((input) =>
