@@ -28,6 +28,40 @@ The result is a fully automated end-to-end podcast generation platform.
 
 ---
 
+## Screenshots
+
+### Workflow Overview — Version 1
+
+![Workflow Overview - Version 1](screenshots/workflow-v1.png)
+
+The original n8n workflow orchestrates the podcast generation pipeline using a Chat Trigger, Google Gemini, Murf AI, and audio download functionality.
+
+---
+
+### Generated Podcast Script
+
+![Generated Podcast Script - Version 1](screenshots/chat-generated-script-v1.png)
+
+Google Gemini generates the podcast script based on the topic provided through the chat interface.
+
+---
+
+### Workflow Overview — Version 2
+
+![Workflow Overview - Version 2](screenshots/workflow-v2.png)
+
+The enhanced workflow uses a Webhook Trigger, frontend integration, Google Gemini, Murf AI, audio download, and Respond to Webhook architecture.
+
+---
+
+### Public Web Application
+
+![AI Podcast Generator Frontend](screenshots/frontend-ui-v2.png)
+
+The browser-based frontend application allows users to generate AI-powered podcasts without directly accessing n8n.
+
+---
+
 ## Major Enhancement (Version 2)
 
 ### Version 1
@@ -350,40 +384,6 @@ AI-Podcast-Generator
 │
 └── README.md
 ```
-
----
-
-## Screenshots
-
-### Workflow Overview — Version 1
-
-![Workflow Overview - Version 1](screenshots/workflow-v1.png)
-
-The original n8n workflow orchestrates the podcast generation pipeline using a Chat Trigger, Google Gemini, Murf AI, and audio download functionality.
-
----
-
-### Generated Podcast Script
-
-![Generated Podcast Script - Version 1](screenshots/chat-generated-script-v1.png)
-
-Google Gemini generates the podcast script based on the topic provided through the chat interface.
-
----
-
-### Workflow Overview — Version 2
-
-![Workflow Overview - Version 2](screenshots/workflow-v2.png)
-
-The enhanced workflow uses a Webhook Trigger, frontend integration, Google Gemini, Murf AI, audio download, and Respond to Webhook architecture.
-
----
-
-### Public Web Application
-
-![AI Podcast Generator Frontend](screenshots/frontend-ui-v2.png)
-
-The browser-based frontend application allows users to generate AI-powered podcasts without directly accessing n8n.
 
 ---
 
