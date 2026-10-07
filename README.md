@@ -539,11 +539,3 @@ The audio was automatically generated using Google Gemini for script generation 
 - Podcast history management
 
 ---
-
-## Security
-
-No API keys, OAuth credentials, authentication tokens, or secrets are stored in this repository.
-
-All credentials are managed securely through n8n credential management and external service providers.
-
----
