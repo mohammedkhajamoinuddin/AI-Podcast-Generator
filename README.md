@@ -387,6 +387,120 @@ AI-Podcast-Generator
 
 ---
 
+## Developer Guide: APIs, Models & Local Development
+
+This project was created and published with **Lovable**. You can try the live application without installing anything. Follow the relevant path below only if you want to explore the source, edit the frontend, or run your own n8n workflow.
+
+### Choose Your Path
+
+| Goal | What you need |
+|---|---|
+| Try the published application | A browser and the [live demo](https://bubble-beat-booth.lovable.app) |
+| Continue editing in Lovable | Access to the original Lovable project |
+| Explore or run the frontend locally | Git, [Bun](https://bun.sh/) and the repository's frontend files |
+| Run your own podcast workflow | An n8n instance, Google Gemini API access, and Murf API access |
+
+Cloning this repository does **not** grant access to the original Lovable project, the deployed n8n instance, or its credentials.
+
+### Services, APIs & Credentials
+
+#### Google Gemini — Script generation
+
+- **Get access:** [Google AI Studio](https://aistudio.google.com/)
+- **Create/manage an API key:** [Gemini API key guide](https://ai.google.dev/gemini-api/docs/api-key)
+- **API and model documentation:** [Gemini API docs](https://ai.google.dev/gemini-api/docs) · [Available models](https://ai.google.dev/gemini-api/docs/models)
+- **Configure in n8n:** Create/select a Google Gemini credential, then choose the model in the **Google Gemini Chat Model** node.
+
+**Model note:** The screenshots show `models/lyria-3-clip-preview` in the Gemini Chat Model node, while the exported workflow JSON files contain different model identifiers. These configurations are inconsistent. Lyria is associated with music generation, so do not assume it is suitable for generating a plain-text podcast script. Before running your own copy, select a currently available text-generation model and verify it with a workflow test. Model availability and node compatibility can change.
+
+#### Murf AI — Text-to-speech
+
+- **Get started:** [Murf API quickstart](https://murf.ai/api/docs/introduction/quickstart)
+- **API reference:** [Generate speech](https://murf.ai/api/docs/api-reference/text-to-speech/generate)
+- **Endpoint shown:** `POST https://api.murf.ai/v1/speech/generate`
+- **Configure:** Store your Murf API key securely and reference it from the n8n HTTP Request node.
+
+The workflow screenshot shows these speech settings:
+
+| Setting | Value shown |
+|---|---|
+| Voice ID | `en-US-natalie` |
+| Style | `Conversational` |
+| Model version | `GEN2` |
+| Locale | `en-IN` |
+
+The exported workflow versions use different request-body shapes. Check the current Murf API documentation and selected workflow before copying settings; confirm that the voice and parameters are supported by your account.
+
+**Security:** Never commit an API key to source code or workflow exports. Use n8n credentials/secret management. If a key has already been committed or shared, revoke or rotate it and remove the exposed value from the repository and its history.
+
+#### n8n — Workflow orchestration
+
+- **Create/use an instance:** [n8n](https://n8n.io/)
+- **Documentation:** [n8n docs](https://docs.n8n.io/)
+- **Import/export workflows:** [Workflow import/export guide](https://docs.n8n.io/workflows/export-import/)
+- **Credentials:** [n8n credentials guide](https://docs.n8n.io/credentials/)
+
+The repository includes two workflow exports:
+
+- `workflows/podcast-generator-v1.json` — the original chat-triggered workflow.
+- `workflows/podcast-generator-v2-webhook.json` — the webhook-based workflow intended for frontend integration.
+
+To run your own backend, import the relevant workflow, configure your own Google Gemini and Murf credentials, verify the model and request parameters, and test each node. Workflow imports do not include working credentials or access to the original hosted n8n instance.
+
+### Run the Frontend Locally (Optional)
+
+Local setup is only needed if you want to work on the frontend outside Lovable.
+
+1. Install [Git](https://git-scm.com/) and [Bun](https://bun.sh/).
+2. Clone the repository and enter the frontend directory:
+
+   ```bash
+   git clone https://github.com/mohammedkhajamoinuddin/AI-Podcast-Generator.git
+   cd AI-Podcast-Generator/frontend
+   ```
+
+3. Install dependencies and start the development server:
+
+   ```bash
+   bun install
+   bun run dev
+   ```
+
+Available frontend scripts are defined in `frontend/package.json` (`dev`, `build`, `lint`, and `preview`). A successful frontend start does not by itself mean the podcast backend is configured or reachable.
+
+### Connect Your Own n8n Workflow
+
+The frontend server function is `frontend/src/lib/podcast.functions.ts`. It currently posts JSON containing a `text` field to a configured n8n webhook and expects a JSON response containing an `audioFile` URL.
+
+Example request:
+
+```json
+{
+  "text": "How artificial intelligence is changing education"
+}
+```
+
+Expected response shape:
+
+```json
+{
+  "audioFile": "https://example.com/generated-audio.wav"
+}
+```
+
+The URL is illustrative only. When using your own workflow, configure the frontend to call your own webhook. Prefer a server-side environment variable over a hardcoded deployment URL, and never expose provider API keys in browser code. Ensure the n8n response matches the expected `audioFile` contract.
+
+### Troubleshooting Checklist
+
+- Confirm the n8n workflow is active and its webhook URL/mode is correct.
+- Confirm the Google credential works and the selected model supports text generation.
+- Confirm the Murf API key, voice ID, request fields, and account access are valid.
+- Confirm the workflow returns an `audioFile` URL in the response expected by the frontend.
+- Check n8n execution logs and provider responses for errors or quota limits.
+- Review provider documentation for current model availability, pricing, and usage limits before running at scale.
+
+---
+
 ## Sample Output
 
 The following WAV file is the final podcast generated by the workflow:
